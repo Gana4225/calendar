@@ -3,5 +3,5 @@ from .views import attendance_calendar
 
 
 urlpatterns = [
-      path('attendance/', attendance_calendar, name='attendance_calendar'),
+      path('', attendance_calendar, name='attendance_calendar'),
 ]
