@@ -15,8 +15,9 @@ from .models import *
 # admin.site.register(dim,gana)
 #
 
-class Ros(admin.ModelAdmin):
-    list_display = ["name", "att_status"]
+
+class Res(admin.ModelAdmin):
+    list_display = ["name","username", "AdmissionDate"]
 
 
-admin.site.register(AttStatus,Ros)
+admin.site.register(Register, Res)
