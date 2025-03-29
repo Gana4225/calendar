@@ -68,6 +68,7 @@ def forgetpass(request,token):
 
             request.session["vt"] = date1[2]
             request.session["fuser"] = user
+
             send_email(date1[1], date1[0], data.email)
 
             return HttpResponse("<h1>Please check your email just \
