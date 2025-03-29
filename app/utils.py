@@ -1,6 +1,5 @@
 import smtplib
 import threading
-
 from django.contrib.auth.hashers import make_password
 from django.core.mail import EmailMessage
 from django.shortcuts import render, HttpResponse
@@ -31,12 +30,16 @@ def send_email(subject, message, receiver_mail):
 
 
 def verify(request, token):
+
     name = request.session.get("ruser")
     stored_token = request.session.get("vt")
+
     if token == stored_token:
+
         user = Register.objects.get(username=name)
         user.is_verified = True
         user.save()
+
         if "ruser" in request.session:
             del request.session["ruser"]
 
@@ -44,56 +47,70 @@ def verify(request, token):
             del request.session["vt"]
 
         return render(request, "app/success.html", {"reg":"done"})
+
     else:
+
         return HttpResponse("Invalid verification link or expired token.")
 
 
 
 
 def forgetpass(request,token):
+
     if request.method == "POST" and token == "change":
+
         try:
+
             user = request.POST.get("username")
-            print(user)
             data = Register.objects.get(username=user)
+
             date1 = gfp(request)
+
             request.session["vt"] = date1[2]
-            request.session["ruser"] = user
+
             send_email(date1[1], date1[0], data.email)
+
             return HttpResponse("<h1>Please check your email just \
                                  we sent an forget password link to it</h1>")
+
         except Exception as e:
             print(e)
+
+            return HttpResponse("<h1>Username does not exists please enter correct username</h1>")
+
     if request.method == "POST" and token == request.session.get("vt"):
 
         new = request.POST.get("newpassword")
         old = request.POST.get("password")
 
         if new == old:
+
             try:
+
                 data = Register.objects.get(username=request.session.get("ruser"))
                 data.password = make_password(new)
                 data.save()
+
+                del request.session["vt"]
+
                 return HttpResponse("password Changed success")
+
             except Exception as e:
+
                 print(e)
 
-        return render(request, "app/forget.html", {"token": "token"})
+        else:
 
-    else:
+            return HttpResponse("Confirm password not matching")
 
         return render(request, "app/forget.html", {"token": token})
 
+    if request.method == "GET" and token == request.session.get("vt"):
+
+        return render(request, "app/forget.html", {"token": token})
 
     return render(request, "app/forget.html", {"token": "token"})
 
-
-
-    # if request.method == "POST":
-    #     user = request.POST.get("username")
-    #     data = Register.objects.get(username=user)
-    #     print(data.username)
-    #     return render(request, "app/forget.html", {"token": token})
 
 
 
@@ -134,6 +151,7 @@ def forgetpass(request,token):
 
 
 def gfp(request):
+
     token = str(uuid.uuid4())
     protocol = "https" if request.is_secure() else "http"
     host = request.get_host()
