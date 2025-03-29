@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body>
+ <nav class="navbar">
+        <a href="{% url 'login' %}" class="logo" style="color:white"> ROYAL GYM </a>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+            <div class="nav-links">
+
+                <a href="{% url 'attendance_calendar' %}">Attendance</a>
+                {% if request.session.user %}
+                <a href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                {% endif %}
+
+
+            </div>
+    </nav>
+
+
+    <script>
+            function toggleMenu() {
+                const navLinks = document.querySelector('.nav-links');
+                navLinks.classList.toggle('active');
+            }
+    </script>
+
+
+<style>
+    /* Navbar container */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background:#343a40;
+    color: #ffffff;
+    position: sticky;
+    top: 0;
+
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px); /* Glassmorphism effect */
+    transition: all 0.3s ease-in-out;
+    animation: slideDown 0.6s ease-out;
+}
+
+/* Slide down animation */
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Logo */
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #4caf50; /* Green logo text */
+    text-decoration: none;
+}
+
+/* Navbar links - Hidden by default */
+.navbar .nav-links {
+    display: none; /* Hidden initially */
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    width: 200px;
+    background-color: #343a40;
+    border-radius: 8px;
+    padding: 10px 0;
+    z-index: 1001;
+    max-height: 300px; /* Set max height for scroll effect */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Navbar links - when active (visible) */
+.navbar .nav-links.active {
+    display: flex;
+}
+
+/* Navbar links styling */
+.navbar .nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    display: block;
+    text-align: left;
+}
+
+.navbar .nav-links a:hover {
+    background-color: #4caf50; /* Hover effect */
+    color: #ffffff;
+}
+
+/* Toggle menu (☰) - Always visible on all screens */
+.navbar .menu-toggle {
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    position: absolute;
+    right: 20px;
+    z-index: 1002;
+}
+
+/* Scrollbar styles for nav links */
+.navbar .nav-links::-webkit-scrollbar {
+    width: 5px;
+}
+
+.navbar .nav-links::-webkit-scrollbar-thumb {
+    background: #4caf50;
+    border-radius: 5px;
+}
+
+/* Ensure navbar links remain hidden by default on all screens */
+@media screen and (min-width: 769px) {
+    .navbar .nav-links {
+        display: none;
+    }
+}
+
+    body{
+    margin:0px;
+    }
+</style>
+
+
+
+{% block content %}
+ {% endblock %}
+
+</body>
+</html>

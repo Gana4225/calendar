@@ -1,0 +1,77 @@
+{% extends "app/master.html" %}
+{% block content %}
+
+<div class="container">
+    {% if nouser %}
+    <div class="error-message">Invalid username</div>
+    <a href="{% url 'login' %}" class="btn">Click here</a>
+    {% endif %}
+
+    {% if nopass %}
+    <div class="error-message">Invalid password</div>
+    <a href="{% url 'login' %}" class="btn">Click here</a>
+    {% endif %}
+
+    {% if nor == 0 %}
+    <div class="error-message">
+        <h2>Error while registering, please try again</h2>
+        <p>Please fill in the proper data.</p>
+        <a href="{% url 'register' %}" class="btn">Click here</a>
+    </div>
+    {% endif %}
+
+    {% if nor == 1 %}
+    <div class="error-message">
+        <h2>User already exists</h2>
+        <a href="{% url 'register' %}" class="btn">Click here</a>
+    </div>
+    {% endif %}
+
+</div>
+
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .error-message {
+        background: #ffdddd;
+        color: #d8000c;
+        padding: 20px;
+        margin: 10px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 300px;
+    }
+
+    .btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 15px;
+        background: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background 0.3s;
+        width:300px;
+    }
+
+    .btn:hover {
+        background: #0056b3;
+    }
+
+    @media (max-width: 480px) {
+        .error-message {
+            width: 90%;
+        }
+    }
+</style>
+
+{% endblock %}

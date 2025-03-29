@@ -4,18 +4,23 @@
 <div class="con">
 
 <div class="login-container">
-    <h2>Login</h2>
+    <h2>Change Password</h2>
 
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        <input type="text" placeholder="Enter Username" name="username" required>
-        <input type="password" placeholder="Enter Password" name="password" required>
-        <input type="submit" value="Login">
-    </form>
-
-    <button onclick="window.location.href='{% url 'register' %}'"
-            style="margin-bottom:1rem;">Register</button>
-    <a href="{% url 'forget' token='change' %}">Forget Password</a>
+    {% if token == "token" %}
+        <form method="post" action="{% url 'forget' token='change' %}">
+            {% csrf_token %}
+            <input type="text" placeholder="Enter Username" name="username" required>
+            <input type="submit" value="Submit">
+        </form>
+    {% else %}
+        <form method="post" action="{% url 'forget' token=token %}">
+            {% csrf_token %}
+            <input type="text" placeholder="Enter New Password" name="newpassword" required>
+            <input type="text" placeholder="Re-type Password" name="password" required>
+            <input type="submit" value="Submit">
+        </form>
+    {% endif %}
+    <button onclick="window.location.href='{% url 'login' %}'">Login</button>
 </div>
 
 
@@ -96,11 +101,6 @@
         background: #2ecc71;
     }
 
-    .login-container a{
-    text-decoration:none;
-    color:black;
-    }
-
     /* Responsive Design */
     @media (max-width: 400px) {
         .login-container {
@@ -111,7 +111,5 @@
             font-size: 14px;
         }
     }
-
-
 </style>
 {% endblock %}

@@ -1,0 +1,130 @@
+{% extends "app/master.html" %}
+{% block content %}
+<div class="mm">
+    <div class="main">
+
+        <div class="con">
+            {% csrf_token %}
+              <form action="{% url 'register' %}" method="post">
+
+                <input type="text" placeholder="name" name="name" required>
+                <input type="text" placeholder="username" name="username" required>
+                <input type="password" placeholder="password" name="password" required>
+                <input type="text" placeholder="Phone" name="phone" required>
+                <input type="email" placeholder="email" name="email" required>
+                <textarea name="address" placeholder="Address...." required></textarea>
+                <input type="hidden" value="reg" name="reg">
+                <input type="submit" value="submit">
+
+              </form>
+
+            <a href="{% url 'login' %}"><button>Login</button></a>
+
+        </div>
+
+    </div>
+
+</div>
+<style>
+
+
+body {
+    background: linear-gradient(to right, #4ca1af, #c4e0e5);
+    margin: 0;
+
+}
+
+.mm{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    font-family: Arial, sans-serif;
+}
+
+
+.main {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
+
+
+input[type="text"],input[type="email"],
+input[type="password"],
+textarea {
+    width: 300px;;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+}
+
+
+textarea {
+    height: 80px;
+    resize: none;
+}
+
+
+input[type="submit"] {
+    width: 95%;
+    background: #2c3e50;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+input[type="submit"]:hover {
+    background: #34495e;
+}
+
+
+button {
+        width: 95%;
+        background: #27ae60;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 10px;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #2ecc71;
+    }
+
+
+@media (max-width: 450px) {
+    .main {
+        padding: 20px;
+    }
+
+    input, textarea {
+        font-size: 14px;
+    }
+}
+
+a{
+text-decoration:none;
+color:white;
+}
+
+</style>
+
+
+{% endblock %}

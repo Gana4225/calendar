@@ -1,0 +1,17 @@
+{% extends "app/master.html" %}
+{% block content %}
+{% if request.session.remail %}
+
+    <form method="POST",  action="{% url 'verify' %}">
+        {% csrf_token %}
+        <input type="text" placeholder="Enter OTP" name="otp">
+        <input type="hidden" value="{{user}}" name="user">
+        <input type="submit">
+    </form>
+{% else %}
+
+<h2>OTP Yet Not Generated Please Try Again</h2>
+
+{% endif %}
+
+{% endblock %}
