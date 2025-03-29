@@ -67,7 +67,7 @@ def forgetpass(request,token):
             date1 = gfp(request)
 
             request.session["vt"] = date1[2]
-
+            request.session["fuser"] = user
             send_email(date1[1], date1[0], data.email)
 
             return HttpResponse("<h1>Please check your email just \
@@ -87,11 +87,15 @@ def forgetpass(request,token):
 
             try:
 
-                data = Register.objects.get(username=request.session.get("ruser"))
+                data = Register.objects.get(username=request.session.get("fuser"))
                 data.password = make_password(new)
                 data.save()
 
-                del request.session["vt"]
+                if "vt" in request.session:
+                    del request.session["vt"]
+
+                if "fuser" in request.session:
+                    del request.session["fuser"]
 
                 return HttpResponse("password Changed success")
 
